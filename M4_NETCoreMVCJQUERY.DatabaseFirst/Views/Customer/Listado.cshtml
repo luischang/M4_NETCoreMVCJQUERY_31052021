@@ -1,0 +1,59 @@
+﻿
+@model IEnumerable<Customer>
+
+
+<table id="tbClientes" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Apellidos</th>
+            <th>Nombres</th>
+            <th>Ciudad</th>
+            <th>País</th>
+            <th>Teléfono</th>
+            <th>Nro Ordenes</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.LastName</td>
+            <td>@item.FirstName</td>
+            <td>@item.City</td>
+            <td>@item.Country</td>
+            <td>@item.Phone</td>
+            <td>@item.Order.Count()</td>
+            <td>
+                <button class="btn btn-danger btnEliminarCliente" data-id="@item.Id">Eliminar</button>
+                <button class="btn btn-warning btnEditarCliente" data-id="@item.Id">Editar</button>
+            </td>
+        </tr>
+        }
+
+
+    </tbody>
+</table>
+
+<script>
+    loadTable()
+    function loadTable() {
+        //$("#tbClientes").DataTable();
+
+        let table = $("#tbClientes").DataTable({
+            //language: {
+            //    url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+            //},
+            lengthChange: false,
+            buttons:['copy','excel','pdf','colvis','print']
+        });
+
+        table.buttons().container()
+            .insertBefore('#tbClientes_filter');
+    }
+
+
+
+</script>

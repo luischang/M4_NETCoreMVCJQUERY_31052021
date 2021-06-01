@@ -1,0 +1,39 @@
+﻿
+
+<div class="alert alert-primary" role="alert">
+    
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Mantenimiento de Clientes</h4>
+        </div>
+        <div class="col-md-2">
+            <button id="btnAgregarCliente" class="btn btn-success">
+                Agregar
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="divListadoClientes">
+
+</div>
+
+
+<script>
+
+    CargarListadoCliente();
+
+    function CargarListadoCliente() {
+        $.ajax({
+            type: "GET",
+            url: "Customer/Listado",
+            cache: false,
+            success: function (dataHTML) {
+                $("#divListadoClientes").html(dataHTML);
+            }
+        });
+    }
+
+</script>
