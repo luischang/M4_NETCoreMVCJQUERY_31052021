@@ -1,7 +1,7 @@
 ﻿
 
 <div class="alert alert-primary" role="alert">
-    
+
     <div class="row">
         <div class="col-md-4">
             <h4>Mantenimiento de Clientes</h4>
@@ -16,12 +16,108 @@
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mantenimiento de Clientes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombres</label>
+                                <input type="text" class="form-control" id="txtNombres" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Apellidos</label>
+                                <input type="text" class="form-control" id="txtApellidos" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>País</label>
+                                <input type="text" class="form-control" id="txtPais" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Ciudad</label>
+                                <input type="text" class="form-control" id="txtCiudad" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="text" class="form-control" id="txtTelefono" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="hidCliente" value="-1" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGrabarCliente">Grabar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="divListadoClientes">
 
 </div>
 
 
 <script>
+
+
+    $("#btnAgregarCliente").click(function () {
+        $("#modalRegistroCliente").modal();
+    });
+
+    $("#btnGrabarCliente").click(function () {
+        let vNombres = $("#txtNombres").val();
+        let vApellidos = $("#txtApellidos").val();
+        let vPais = $("#txtPais").val();
+        let vCiudad = $("#txtCiudad").val();
+        let vTelefono = $("#txtTelefono").val();
+        let vIdCliente = $("#hidCliente").val();
+
+        $.ajax({
+            type: "POST",
+            url: "Customer/Grabar",
+            cache: false,
+            data: {
+                idCliente: vIdCliente,
+                nombres: vNombres,
+                apellidos: vApellidos,
+                pais: vPais,
+                ciudad: vCiudad,
+                telefono: vTelefono
+            },
+            success: function (exito) {
+                if (exito) {
+                    alert("Se registró correctamente");
+                    CargarListadoCliente();
+                    $("#modalRegistroCliente").modal("toggle");
+                }
+            }
+        });
+    });
 
     CargarListadoCliente();
 
