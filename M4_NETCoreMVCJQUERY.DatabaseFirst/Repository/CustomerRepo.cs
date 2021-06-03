@@ -61,7 +61,7 @@ namespace M4_NETCoreMVCJQUERY.DatabaseFirst.Repository
             {
                 using var data = new SalesContext();
 
-                var customerNow = await GetCustomerById(customer.Id);
+                var customerNow = await data.Customer.Where(x => x.Id == customer.Id).FirstOrDefaultAsync(); //await GetCustomerById(customer.Id);
 
                 customerNow.FirstName = customer.FirstName;
                 customerNow.LastName = customer.LastName;
@@ -90,7 +90,7 @@ namespace M4_NETCoreMVCJQUERY.DatabaseFirst.Repository
             {
                 using var data = new SalesContext();
 
-                var customerNow = await GetCustomerById(id);
+                var customerNow = await data.Customer.Where(x => x.Id == id).FirstOrDefaultAsync();//await GetCustomerById(id);
                 data.Customer.Remove(customerNow);
                 await data.SaveChangesAsync();
             }

@@ -15,11 +15,26 @@ namespace M4_NETCoreMVCJQUERY.DatabaseFirst.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> Obtener(int idCliente)
+        {
+            var customer = await CustomerRepo.GetCustomerById(idCliente);
+            return Json(customer);
+        }
+
         public async Task<IActionResult> Listado()
         {
             var listado = await CustomerRepo.GetCustomersAsync();
             return PartialView(listado);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Eliminar(int idCliente)
+        {
+            var exito = await CustomerRepo.Delete(idCliente);
+            return Json(exito);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Grabar(int idCliente,
